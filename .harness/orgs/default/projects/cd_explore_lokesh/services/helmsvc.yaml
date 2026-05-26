@@ -3,3 +3,25 @@ service:
   identifier: helmsvc
   orgIdentifier: default
   projectIdentifier: cd_explore_lokesh
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: helmManifest
+            type: HelmChart
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: lokeshGithubConnector
+                  gitFetchType: Branch
+                  folderPath: /
+                  repoName: helm-test-app
+                  branch: main
+              subChartPath: ""
+              optionalValuesYaml: false
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+              helmVersion: V2
+              fetchHelmChartMetadata: false
+    type: NativeHelm
