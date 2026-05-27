@@ -15,10 +15,12 @@ service:
                 spec:
                   connectorRef: lokeshGithubConnector
                   gitFetchType: Branch
-                  folderPath: /
+                  folderPath: charts/nginx-app
                   repoName: helm-test-app
                   branch: main
               subChartPath: ""
+              valuesPaths:
+                - charts/nginx-app/values.yaml
               optionalValuesYaml: false
               skipResourceVersioning: false
               enableDeclarativeRollback: false
