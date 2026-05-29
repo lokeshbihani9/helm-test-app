@@ -1,0 +1,12 @@
+namespace: lbihani9-helm
+dockercfg: <+artifact.imagePullSecret>
+image: lbihani9testcorrectpass/lbihani9-test:v1
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

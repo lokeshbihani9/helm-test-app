@@ -1,0 +1,44 @@
+{{- if .Values.dockercfg}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dockerhub-test-dockercfg
+  namespace: {{ .Values.namespace }}
+  annotations:
+    harness.io/skip-versioning: "true"
+data:
+  .dockercfg: {{.Values.dockercfg}}
+type: kubernetes.io/dockercfg
+---
+{{- end}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockerhub-test-app
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: dockerhub-test-app
+    team: cds
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: dockerhub-test-app
+  template:
+    metadata:
+      labels:
+        app: dockerhub-test-app
+        team: cds
+    spec:
+      {{- if .Values.dockercfg}}
+      imagePullSecrets:
+      - name: dockerhub-test-dockercfg
+      {{- end}}
+      containers:
+      - name: dockerhub-test-app
+        image: {{ .Values.image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
