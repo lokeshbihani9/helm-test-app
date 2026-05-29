@@ -1,6 +1,6 @@
 namespace: lbihani9-helm
 dockercfg: <+artifact.imagePullSecret>
-image: lbihani9testcorrectpass/lbihani9-test:v1
+image: <+artifact.image>
 replicaCount: 1
 
 resources:
