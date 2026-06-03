@@ -1,0 +1,31 @@
+---
+# Tanzu Application Service (TAS) Manifest
+# This manifest defines the application deployment configuration for
+# pushing to a Tanzu Application Service (Cloud Foundry) foundation.
+#
+# Used by Harness CD pipelines to deploy via cf push with TAS infrastructure.
+
+applications:
+  - name: helm-test-app
+    memory: 512M
+    disk_quota: 1G
+    instances: 2
+    buildpacks:
+      - nginx_buildpack
+    stack: cflinuxfs4
+    routes:
+      - route: helm-test-app.apps.internal
+    env:
+      ENVIRONMENT: production
+      APP_VERSION: "1.0.0"
+      LOG_LEVEL: info
+    health-check-type: http
+    health-check-http-endpoint: /health
+    timeout: 120
+    metadata:
+      labels:
+        team: cd
+        managed-by: harness
+      annotations:
+        harness.io/pipeline: tas-deploy-pipeline
+        harness.io/service: helm-test-app-svc

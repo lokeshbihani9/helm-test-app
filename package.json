@@ -1,0 +1,10 @@
+{
+  "name": "helm-test-app",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest --json --outputFile=test-results.json"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
