@@ -10,9 +10,6 @@ applications:
     memory: 512M
     disk_quota: 1G
     instances: 2
-    buildpacks:
-      - nginx_buildpack
-    stack: cflinuxfs4
     routes:
       - route: helm-test-app.apps.internal
     env:
