@@ -1,5 +1,5 @@
 service:
-  name: helm-svc
+  name: helm-svc-remote
   identifier: helmsvc
   orgIdentifier: default
   projectIdentifier: cd_explore_lokesh
