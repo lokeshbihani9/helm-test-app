@@ -1,0 +1,20 @@
+# ForgeRock IG route conditions - these use ${...} syntax that conflicts with
+# Harness delegate-side expression evaluation (CDS-127379)
+igRoutes:
+  clientValidation:
+    # This expression gets corrupted: JEXL 3.5 'empty' operator evaluates it to "false"
+    condition: "${not empty request.headers['client_id'][0]}"
+    # This one also gets corrupted (same 'empty' operator issue)
+    tokenCheck: "${not empty request.cookies['session_token']}"
+
+  # These expressions are SAFE - they use operators that still throw JexlException
+  # on undefined variables in JEXL 3.5 (comparison operators, function calls)
+  safeExpressions:
+    comparison: "${request.uri.path == '/health'}"
+    functionCall: "${matches(request.uri.path, '^/api/.*')}"
+
+# Normal values (not expressions)
+replicaCount: 1
+image:
+  repository: nginx
+  tag: "1.25"

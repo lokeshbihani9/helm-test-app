@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-ig-routes
+data:
+  routes.json: |
+    {
+      "handler": {
+        "type": "DispatchHandler",
+        "config": {
+          "bindings": [
+            {
+              "condition": "{{ .Values.igRoutes.clientValidation.condition }}",
+              "handler": "ClientValidationHandler"
+            },
+            {
+              "condition": "{{ .Values.igRoutes.clientValidation.tokenCheck }}",
+              "handler": "TokenHandler"
+            },
+            {
+              "condition": "{{ .Values.igRoutes.safeExpressions.comparison }}",
+              "handler": "HealthCheckHandler"
+            }
+          ]
+        }
+      }
+    }

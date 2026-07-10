@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ig-routes
+description: Test chart to reproduce CDS-127379 - ForgeRock IG expression corruption
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
