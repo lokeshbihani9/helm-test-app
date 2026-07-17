@@ -6,37 +6,12 @@ igRoutes:
     condition: "${not empty request.headers['client_id'][0]}"
     # This one also gets corrupted (same 'empty' operator issue)
     tokenCheck: "${not empty request.cookies['session_token']}"
+
   # These expressions are SAFE - they use operators that still throw JexlException
   # on undefined variables in JEXL 3.5 (comparison operators, function calls)
   safeExpressions:
     comparison: "${request.uri.path == '/health'}"
     functionCall: "${matches(request.uri.path, '^/api/.*')}"
-
-  # ---- Verification expressions (CDS-127379) ----
-  # Deploy once with the fix, then check rendered manifests.
-  #   Preserved = still the raw ${...} string  -> fix works
-  #   Evaluated = resolved / turned to "false"  -> bug still present
-  verifyFix:
-    # SHOULD BE PRESERVED (root "request" not in Harness context)
-    notEmpty:      "${not empty request.headers['client_id'][0]}"
-    bangEmpty:     "${!empty request.headers['client_id'][0]}"
-    sizeOp:        "${size request.headers['client_id']}"
-    chainedPrefix: "${not empty size request.headers}"
-
-    # SHOULD BE PRESERVED (root not in context)
-    functionCall:  "${matches(request.uri.path, '^/api/.*')}"
-    comparison:    "${request.uri.path == '/health'}"
-
-    # SHOULD BE EVALUATED (root IS a Harness functor/variable)
-    harnessSecret: "${secrets.getValue('my_secret')}"
-    harnessVar:    "${serviceVariable.myVar}"
-
-    # EDGE: "not" without space — regex captures "not" itself as root
-    noSpace:       "${not(request.headers['x'])}"
-
-    # EDGE: plain literals — regex won't match, falls through to JEXL
-    literal:       "${42}"
-    nullLiteral:   "${null}"
 
 # Normal values (not expressions)
 replicaCount: 1
