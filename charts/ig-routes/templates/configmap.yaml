@@ -35,7 +35,6 @@ data:
       "functionCall": "{{ .Values.igRoutes.verifyFix.functionCall }}",
       "comparison": "{{ .Values.igRoutes.verifyFix.comparison }}",
       "harnessSecret": "{{ .Values.igRoutes.verifyFix.harnessSecret }}",
-      "harnessVar": "{{ .Values.igRoutes.verifyFix.harnessVar }}",
       "noSpace": "{{ .Values.igRoutes.verifyFix.noSpace }}",
       "literal": "{{ .Values.igRoutes.verifyFix.literal }}",
       "nullLiteral": "{{ .Values.igRoutes.verifyFix.nullLiteral }}"
