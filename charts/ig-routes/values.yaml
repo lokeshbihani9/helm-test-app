@@ -28,7 +28,7 @@ igRoutes:
     comparison:    "${request.uri.path == '/health'}"
 
     # SHOULD BE EVALUATED (root IS a Harness functor/variable)
-    harnessSecret: "${secrets.getValue('my_secret')}"
+    harnessSecret: "${secrets.getValue('qa-sa-secret')}"
     harnessVar:    "${serviceVariable.myVar}"
 
     # EDGE: "not" without space — regex captures "not" itself as root
